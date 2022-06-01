@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 _currentDir = Vector2.zero;
     private Vector2 _currentDirVelocity = Vector2.zero;
     private PlayerBehaviour _playerBehaviour;
+    private float _velocityY = 0.0f;
+    private float _gravity = -10.0f;
 
     private void Start()
     {
@@ -33,7 +35,14 @@ public class PlayerController : MonoBehaviour
 
         _currentDir = Vector2.SmoothDamp(_currentDir, targetDir, ref _currentDirVelocity, _moveSmoothTime);
 
-        Vector3 velocity = (transform.forward * _currentDir.y + transform.right * _currentDir.x) * _playerBehaviour.UnitSpeed;
+        if (_playerController.isGrounded)
+        {
+            _velocityY = 0.0f;
+        }
+
+        _velocityY += _gravity * Time.deltaTime;
+
+        Vector3 velocity = (transform.forward * _currentDir.y + transform.right * _currentDir.x) * _playerBehaviour.UnitSpeed + Vector3.up * _velocityY;
 
         _playerController.Move(velocity * Time.deltaTime);
     }

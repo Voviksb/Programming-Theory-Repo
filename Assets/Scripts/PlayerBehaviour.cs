@@ -26,6 +26,7 @@ public class PlayerBehaviour : UnitBehaviour
     {
         GameObject bullet = Instantiate(_bulletPrefab, _weaponMuzzlePos.position, _weaponMuzzlePos.transform.rotation) as GameObject;
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        bulletRb.velocity = _weaponMuzzlePos.transform.forward * 150f;
+        bulletRb.velocity = _weaponMuzzlePos.transform.forward * 250f;
+        Destroy(bullet, 3f);
     }
 }

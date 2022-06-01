@@ -5,10 +5,17 @@ using UnityEngine.AI;
 
 public class EnemyBehavior : UnitBehaviour
 {
+    [SerializeField] private GameObject _playerObject;
     [SerializeField] private Transform _playerTransform;
-    private NavMeshAgent _enemyNavMeshAgent;
     [SerializeField] private Animator _enemyAnimator;
+    [SerializeField] private SkinnedMeshRenderer _meshRenderer;
+    [SerializeField] private Rigidbody _enemyRigidbody;
+    private Color _origEnemyColor;
 
+    private bool isAlive = true;
+    private NavMeshAgent _enemyNavMeshAgent;
+
+    
     private void Awake()
     {
         _enemyNavMeshAgent = GetComponent<NavMeshAgent>();
@@ -19,6 +26,8 @@ public class EnemyBehavior : UnitBehaviour
         _unitHp = 50;
         _unitSpeed = 15;
         _enemyNavMeshAgent.speed = _unitSpeed;
+        _playerTransform = GameObject.FindWithTag("player").GetComponent<Transform>();
+        _origEnemyColor = _meshRenderer.material.color;
     }
 
     private void Update()
@@ -33,22 +42,48 @@ public class EnemyBehavior : UnitBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        CheckDamage(collision);
+    }
+
+    private void CheckDamage(Collision collision)
+    {
         if (collision.gameObject.CompareTag("bullet"))
         {
             Destroy(collision.gameObject);
-            _unitHp -= 10;
-            Debug.Log(_unitHp);
-        };
-
-        if (_unitHp <= 0)
-        {
-            _enemyNavMeshAgent.isStopped = true;
-            _enemyAnimator.SetFloat("UnitHp", 0);
+            if (isAlive)
+            {
+                _unitHp -= 10;
+                StartCoroutine(DamageFlash());
+                Debug.Log(_unitHp);
+                CheckDeath();
+            }
         }
     }
 
-    IEnumerator Timer(float time)
+    private void CheckDeath()
     {
-        yield return new WaitForSeconds(time);
+        if (_unitHp <= 0 && isAlive)
+        {
+            isAlive = false;
+            _enemyNavMeshAgent.isStopped = true;
+            _enemyAnimator.SetFloat("UnitHp", 0);
+            _enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+
+            _meshRenderer.material.color = Color.black;
+            Debug.Log("Color is black");
+
+            Destroy(gameObject, 1.7f);
+        }
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        _meshRenderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.25f);
+        if (isAlive)
+        {
+            _meshRenderer.material.color = _origEnemyColor;
+        }
+        Debug.Log("Color is back");
     }
 }

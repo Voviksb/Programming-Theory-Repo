@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     private float _cameraPitch = 0.0f;
     private Vector2 _currentMouseDelta = Vector2.zero;
     private Vector2 _currentMouseDeltaVelocity = Vector2.zero;
-
+    
     private void Start()
     {
         if (lockCursor)
