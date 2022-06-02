@@ -30,6 +30,19 @@ public class EnemyBehavior : UnitBehaviour
         _origEnemyColor = _meshRenderer.material.color;
     }
 
+    public int EnemyHp
+    {
+        get { return _unitHp;}
+        private set
+        {
+            _unitHp = value;
+            if(_unitHp <= 0 && isAlive)
+            {
+                EnemyDeath();
+            }
+        }
+    }
+
     private void Update()
     {
         _enemyNavMeshAgent.destination = _playerTransform.position;
@@ -42,38 +55,32 @@ public class EnemyBehavior : UnitBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        CheckDamage(collision);
-    }
-
-    private void CheckDamage(Collision collision)
-    {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            Destroy(collision.gameObject);
-            if (isAlive)
-            {
-                _unitHp -= 10;
-                StartCoroutine(DamageFlash());
-                Debug.Log(_unitHp);
-                CheckDeath();
-            }
+            ReceiveDamage();
         }
     }
 
-    private void CheckDeath()
+    public override void ReceiveDamage() 
     {
-        if (_unitHp <= 0 && isAlive)
-        {
+            if (isAlive)
+            {
+                StartCoroutine(DamageFlash());
+                EnemyHp -= 10;
+                Debug.Log(_unitHp);
+            }
+    }
+
+    private void EnemyDeath()
+    {
+            GameManager.Instance.enemies.Remove(this.gameObject);
             isAlive = false;
             _enemyNavMeshAgent.isStopped = true;
             _enemyAnimator.SetFloat("UnitHp", 0);
             _enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
-
             _meshRenderer.material.color = Color.black;
             Debug.Log("Color is black");
-
             Destroy(gameObject, 1.7f);
-        }
     }
 
     private IEnumerator DamageFlash()

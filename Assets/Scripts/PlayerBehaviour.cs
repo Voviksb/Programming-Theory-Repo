@@ -29,4 +29,9 @@ public class PlayerBehaviour : UnitBehaviour
         bulletRb.velocity = _weaponMuzzlePos.transform.forward * 250f;
         Destroy(bullet, 3f);
     }
+
+    public override void ReceiveDamage()
+    {
+
+    }
 }
