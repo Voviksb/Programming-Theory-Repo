@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] Vector3[] spawnPositions = new Vector3[5];
     [SerializeField] private int _wavesNumber;
+    [SerializeField] private int _currentWave = 0;
+    [SerializeField] private UserInterface userInterface;
 
    // public delegate void AllEnemiesDead();
   //  public static event AllEnemiesDead OnDead;
@@ -29,39 +31,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public UserInterface UserInterface
+    {
+        get { return userInterface; }
+    }
+
     private void Start()
     {
-        SpawnEnemies(_enemiesNumber);
+       // SpawnEnemies(_enemiesNumber);
     }
 
     private void Update()
     {
-        if(enemies.Count == 0)
+        if(enemies.Count == 0 && _wavesNumber > 0)
         {
             SpawnEnemies(_enemiesNumber);
         }
     }
 
-    private void SpawnEnemies(int _enemiesNumber)
+    private void SpawnEnemies(int _enemiesToSpawn)
     {
-        _enemiesNumber++;
-        _wavesNumber--;
-        for (int i = 0; i < _enemiesNumber; i++)
+        _currentWave++;
+        userInterface.UpdateWaveText(_currentWave);
+        for (int i = 0; i < _enemiesToSpawn; i++)
         {
             enemies.Add(Instantiate(_enemyPrefab, spawnPositions[Random.Range(0, spawnPositions.Length)], _enemyPrefab.transform.rotation));
         }
+        Debug.Log(enemies.Count);
+        _enemiesNumber++;
+        _wavesNumber--;
     }
-
-   /* public void AllEnemyDead(GameObject enemy)
-    {
-        if (enemies.Contains(enemy))
-        {
-            enemies.Remove(enemy);
-            if(enemies.Count == 0 && OnDead != null)
-            {
-                OnDead();
-            }
-        }
-    }*/
-
 }

@@ -834,7 +834,7 @@ GameObject:
   - component: {fileID: 1532636303}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -887,6 +887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitHp: 50
+  _playerObject: {fileID: 0}
   _playerTransform: {fileID: 0}
   _enemyAnimator: {fileID: 7537164333021755360}
   _meshRenderer: {fileID: 7537164331047205988}

@@ -9,6 +9,7 @@ public class PlayerBehaviour : UnitBehaviour
     private void Start()
     {
         _unitHp = 100;
+        GameManager.Instance.UserInterface.UpdateHpText(_unitHp);
         _unitSpeed = 40;
     }
 
@@ -16,6 +17,19 @@ public class PlayerBehaviour : UnitBehaviour
     {
         get { 
             return _unitSpeed;
+        }
+    }
+
+    public int UnitHP
+    {
+        get
+        {
+            return _unitSpeed;
+        }
+        private set
+        {
+            _unitHp = value;
+            GameManager.Instance.UserInterface.UpdateHpText(_unitHp);
         }
     }
     private void Update()
