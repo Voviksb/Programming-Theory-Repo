@@ -66,7 +66,7 @@ public class EnemyBehavior : UnitBehaviour
             if (isAlive)
             {
                 StartCoroutine(DamageFlash());
-                EnemyHp -= 10;
+                EnemyHp -= 50;
                 Debug.Log(_unitHp);
             }
     }
@@ -76,8 +76,8 @@ public class EnemyBehavior : UnitBehaviour
             GameManager.Instance.enemies.Remove(this.gameObject);
             isAlive = false;
             _enemyNavMeshAgent.isStopped = true;
-            _enemyAnimator.SetFloat("UnitHp", 0);
             _enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            _enemyAnimator.SetFloat("UnitHp", 0); 
             _meshRenderer.material.color = Color.black;
             Debug.Log("Color is black");
             Destroy(gameObject, 1.7f);

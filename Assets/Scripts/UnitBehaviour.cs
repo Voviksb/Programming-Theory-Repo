@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class UnitBehaviour : MonoBehaviour
 {
     [SerializeField] protected int _unitHp;
-    protected int _unitSpeed;
+    [SerializeField] protected int _unitSpeed;
     public abstract void Attack();
     public abstract void ReceiveDamage();
 }

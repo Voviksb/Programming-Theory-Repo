@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-       // SpawnEnemies(_enemiesNumber);
+
     }
 
     private void Update()
@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         {
             SpawnEnemies(_enemiesNumber);
         }
+        userInterface.UpdateEnemiesText(enemies.Count);
     }
 
     private void SpawnEnemies(int _enemiesToSpawn)
