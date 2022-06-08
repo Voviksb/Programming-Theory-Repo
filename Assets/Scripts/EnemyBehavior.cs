@@ -15,12 +15,10 @@ public class EnemyBehavior : UnitBehaviour
     private bool isAlive = true;
     private NavMeshAgent _enemyNavMeshAgent;
 
-    
     private void Awake()
     {
         _enemyNavMeshAgent = GetComponent<NavMeshAgent>();
     }
-
     private void Start()
     {
         _unitHp = 50;
@@ -67,19 +65,19 @@ public class EnemyBehavior : UnitBehaviour
             {
                 StartCoroutine(DamageFlash());
                 EnemyHp -= 50;
-                Debug.Log(_unitHp);
+              //  Debug.Log(_unitHp);
             }
     }
 
     private void EnemyDeath()
     {
-            GameManager.Instance.enemies.Remove(this.gameObject);
+            GameManager.Instance.OnEnemyDeath(this.gameObject);
             isAlive = false;
             _enemyNavMeshAgent.isStopped = true;
             _enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
             _enemyAnimator.SetFloat("UnitHp", 0); 
             _meshRenderer.material.color = Color.black;
-            Debug.Log("Color is black");
+            //Debug.Log("Color is black");
             Destroy(gameObject, 1.7f);
     }
 
@@ -91,6 +89,6 @@ public class EnemyBehavior : UnitBehaviour
         {
             _meshRenderer.material.color = _origEnemyColor;
         }
-        Debug.Log("Color is back");
+        //Debug.Log("Color is back");
     }
 }

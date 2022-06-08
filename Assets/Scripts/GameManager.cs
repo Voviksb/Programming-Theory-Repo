@@ -14,8 +14,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _currentWave = 0;
     [SerializeField] private UserInterface userInterface;
 
-   // public delegate void AllEnemiesDead();
-  //  public static event AllEnemiesDead OnDead;
+    /* public delegate void WaveHandler(int _currentWave);
+     public event WaveHandler OnWavesChangedEvent;
+
+     public delegate void EnemyCountHandler(int enemiesCount);
+     public event EnemyCountHandler OnEnemiesCountChangeEvent;*/
+
+    public delegate void GameManagerHandler(int value);
+    public event GameManagerHandler OnWavesChangedEvent;
+    public event GameManagerHandler OnEnemiesCountChangeEvent;
 
     public List<GameObject> enemies;
 
@@ -38,27 +45,34 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        this.OnWavesChangedEvent?.Invoke(_currentWave);
+        SpawnEnemies(_enemiesNumber);
     }
 
     private void Update()
     {
-        if(enemies.Count == 0 && _wavesNumber > 0)
+        
+    }
+
+    public void OnEnemyDeath(GameObject enemy)
+    {
+        enemies.Remove(enemy);
+        this.OnEnemiesCountChangeEvent?.Invoke(enemies.Count);
+        if (enemies.Count == 0 && _wavesNumber > 0)
         {
             SpawnEnemies(_enemiesNumber);
         }
-        userInterface.UpdateEnemiesText(enemies.Count);
     }
 
     private void SpawnEnemies(int _enemiesToSpawn)
     {
         _currentWave++;
-        userInterface.UpdateWaveText(_currentWave);
+        this.OnWavesChangedEvent?.Invoke(_currentWave);
         for (int i = 0; i < _enemiesToSpawn; i++)
         {
             enemies.Add(Instantiate(_enemyPrefab, spawnPositions[Random.Range(0, spawnPositions.Length)], _enemyPrefab.transform.rotation));
         }
-        Debug.Log(enemies.Count);
+        this.OnEnemiesCountChangeEvent?.Invoke(enemies.Count);
         _enemiesNumber++;
         _wavesNumber--;
     }

@@ -29,7 +29,6 @@ public class CameraController : MonoBehaviour
      
     }
 
-
     private void UpdateMouseLook()
     {
         Vector2 targetMouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
