@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class EnemyBehavior : UnitBehaviour
 {
@@ -12,8 +13,10 @@ public class EnemyBehavior : UnitBehaviour
     [SerializeField] private Rigidbody _enemyRigidbody;
     private Color _origEnemyColor;
 
+    
+
     private bool isAlive = true;
-    private NavMeshAgent _enemyNavMeshAgent;
+    private NavMeshAgent _enemyNavMeshAgent; 
 
     private void Awake()
     {
@@ -21,7 +24,8 @@ public class EnemyBehavior : UnitBehaviour
     }
     private void Start()
     {
-        _unitHp = 50;
+        _maxHp = 100;
+        _currentHp = _maxHp;
         _unitSpeed = 15;
         _enemyNavMeshAgent.speed = _unitSpeed;
         _playerTransform = GameObject.FindWithTag("player").GetComponent<Transform>();
@@ -30,13 +34,18 @@ public class EnemyBehavior : UnitBehaviour
 
     public int EnemyHp
     {
-        get { return _unitHp;}
+        get { return _currentHp;}
         private set
         {
-            _unitHp = value;
-            if(_unitHp <= 0 && isAlive)
+            _currentHp = value;
+            if (_currentHp <= 0 && isAlive)
             {
                 EnemyDeath();
+            }
+            else
+            {
+                float _currentHpAsPercentage = (float)_currentHp / _maxHp;
+                base.OnDamageReceive(_currentHpAsPercentage);
             }
         }
     }
@@ -51,20 +60,20 @@ public class EnemyBehavior : UnitBehaviour
         throw new System.NotImplementedException();
     }
 
-    private void OnCollisionEnter(Collision collision)
+/*    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
             ReceiveDamage();
         }
     }
-
+*/
     public override void ReceiveDamage() 
     {
             if (isAlive)
             {
                 StartCoroutine(DamageFlash());
-                EnemyHp -= 50;
+                EnemyHp -= 20;
               //  Debug.Log(_unitHp);
             }
     }
@@ -72,6 +81,8 @@ public class EnemyBehavior : UnitBehaviour
     private void EnemyDeath()
     {
             GameManager.Instance.OnEnemyDeath(this.gameObject);
+            base.OnDamageReceive(0);
+            // OnDamageReceiveEvent?.Invoke(0);
             isAlive = false;
             _enemyNavMeshAgent.isStopped = true;
             _enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;

@@ -6,8 +6,9 @@ public class BulletBehavior : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("enemy"))
+        if(collision.gameObject.TryGetComponent<EnemyBehavior>(out EnemyBehavior enemy))
         {
+            enemy?.ReceiveDamage();
             Destroy(gameObject);
         }
         else

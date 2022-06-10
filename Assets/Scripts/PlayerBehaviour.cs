@@ -8,8 +8,9 @@ public class PlayerBehaviour : UnitBehaviour
     [SerializeField] private Transform _weaponMuzzlePos;
     private void Start()
     {
-        _unitHp = 100;
-        GameManager.Instance.UserInterface.UpdateHpText(_unitHp);
+        _maxHp = 100;
+        _currentHp = _maxHp;
+       // GameManager.Instance.UserInterface.UpdateHpText(_unitHp);
         _unitSpeed = 40;
     }
 
@@ -24,17 +25,29 @@ public class PlayerBehaviour : UnitBehaviour
     {
         get
         {
-            return _unitSpeed;
+            return _currentHp;
         }
         private set
         {
-            _unitHp = value;
-            GameManager.Instance.UserInterface.UpdateHpText(_unitHp);
+            _currentHp = value;
+            if (_currentHp <= 0)
+            {
+                Debug.Log("Player dead");
+                base.OnDamageReceive(0);
+            }
+            else
+            {
+                float _currentHpAsPercentage = (float)_currentHp / _maxHp;
+                base.OnDamageReceive(_currentHpAsPercentage);
+            }
         }
     }
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ReceiveDamage();
+        }
     }
     public override void Attack()
     {
@@ -46,6 +59,11 @@ public class PlayerBehaviour : UnitBehaviour
 
     public override void ReceiveDamage()
     {
+        UnitHP -= 10;
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
     }
 }

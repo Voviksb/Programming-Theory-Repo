@@ -7,7 +7,7 @@ public class UserInterface : MonoBehaviour
 {
    // private GameManager gameManager;
     [SerializeField] private TextMeshProUGUI _waveText;
-    [SerializeField] private TextMeshProUGUI _unitHpText;
+ //   [SerializeField] private TextMeshProUGUI _unitHpText;
     [SerializeField] private TextMeshProUGUI _enemiesText;
 
     /*public UserInterface(GameManager gameManager)
@@ -27,11 +27,11 @@ public class UserInterface : MonoBehaviour
 
     }
 
-    public void UpdateHpText(int unitHp)
+/*    public void UpdateHpText(int unitHp)
     {
         _unitHpText.text = "HP: " + unitHp;
     }
-
+*/
     private void OnEnemiesCountChange(int enemiesCount)
     {
         _enemiesText.text = "Enemies left: " + enemiesCount;
