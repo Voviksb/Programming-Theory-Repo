@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 6380328688324656678}
-  enemy: {fileID: 4018216725190166428}
+  healthBarOwner: {fileID: 4018216725190166428}
 --- !u!1 &4169750506088359953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,14 +1153,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b73af86764269f4b9d927f2207764f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitHp: 50
+  _currentHp: 0
   _unitSpeed: 0
+  _maxHp: 0
   _playerObject: {fileID: 0}
   _playerTransform: {fileID: 0}
   _enemyAnimator: {fileID: 7537164333021755360}
   _meshRenderer: {fileID: 7537164331047205988}
   _enemyRigidbody: {fileID: 1532636301}
-  _maxHp: 0
 --- !u!54 &1532636301
 Rigidbody:
   m_ObjectHideFlags: 0

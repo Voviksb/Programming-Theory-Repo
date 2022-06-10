@@ -10,7 +10,6 @@ public class PlayerBehaviour : UnitBehaviour
     {
         _maxHp = 100;
         _currentHp = _maxHp;
-       // GameManager.Instance.UserInterface.UpdateHpText(_unitHp);
         _unitSpeed = 40;
     }
 
@@ -32,14 +31,9 @@ public class PlayerBehaviour : UnitBehaviour
             _currentHp = value;
             if (_currentHp <= 0)
             {
-                Debug.Log("Player dead");
-                base.OnDamageReceive(0);
+               Debug.Log("Player dead");
             }
-            else
-            {
-                float _currentHpAsPercentage = (float)_currentHp / _maxHp;
-                base.OnDamageReceive(_currentHpAsPercentage);
-            }
+            UpdateHpBar();
         }
     }
     private void Update()
@@ -53,7 +47,7 @@ public class PlayerBehaviour : UnitBehaviour
     {
         GameObject bullet = Instantiate(_bulletPrefab, _weaponMuzzlePos.position, _weaponMuzzlePos.transform.rotation) as GameObject;
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        bulletRb.velocity = _weaponMuzzlePos.transform.forward * 250f;
+        bulletRb.velocity = _weaponMuzzlePos.transform.forward * 400f;
         Destroy(bullet, 3f);
     }
 
@@ -62,8 +56,16 @@ public class PlayerBehaviour : UnitBehaviour
         UnitHP -= 10;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void UpdateHpBar()
     {
-        
+        if (_currentHp <= 0)
+        {
+            base.OnDamageReceived(0);
+        }
+        else
+        {
+             float _currentHpAsPercentage = (float)_currentHp / _maxHp;
+            base.OnDamageReceived(_currentHpAsPercentage);
+        }
     }
 }

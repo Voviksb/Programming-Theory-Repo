@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlayerHealthBar : HealthBarBase
 {
-    [SerializeField] PlayerBehaviour player;
+/*    [SerializeField] PlayerBehaviour player;
 
     void Awake()
     {
-        player.OnDamageReceiveEvent += base.OnDamageReceived;
+        player.OnDamageReceivedEvent += base.OnDamageReceived;
     }
 
     void OnDestroy()
     {
-        player.OnDamageReceiveEvent -= base.OnDamageReceived;
-    }
+        player.OnDamageReceivedEvent -= base.OnDamageReceived;
+    }*/
 }

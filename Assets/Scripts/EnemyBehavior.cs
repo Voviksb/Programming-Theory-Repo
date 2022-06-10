@@ -13,8 +13,6 @@ public class EnemyBehavior : UnitBehaviour
     [SerializeField] private Rigidbody _enemyRigidbody;
     private Color _origEnemyColor;
 
-    
-
     private bool isAlive = true;
     private NavMeshAgent _enemyNavMeshAgent; 
 
@@ -45,7 +43,7 @@ public class EnemyBehavior : UnitBehaviour
             else
             {
                 float _currentHpAsPercentage = (float)_currentHp / _maxHp;
-                base.OnDamageReceive(_currentHpAsPercentage);
+                OnDamageReceived(_currentHpAsPercentage);
             }
         }
     }
@@ -60,29 +58,19 @@ public class EnemyBehavior : UnitBehaviour
         throw new System.NotImplementedException();
     }
 
-/*    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("bullet"))
-        {
-            ReceiveDamage();
-        }
-    }
-*/
     public override void ReceiveDamage() 
     {
             if (isAlive)
             {
                 StartCoroutine(DamageFlash());
-                EnemyHp -= 20;
-              //  Debug.Log(_unitHp);
+                EnemyHp -= 30;
             }
     }
 
     private void EnemyDeath()
     {
             GameManager.Instance.OnEnemyDeath(this.gameObject);
-            base.OnDamageReceive(0);
-            // OnDamageReceiveEvent?.Invoke(0);
+            OnDamageReceived(0);
             isAlive = false;
             _enemyNavMeshAgent.isStopped = true;
             _enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
