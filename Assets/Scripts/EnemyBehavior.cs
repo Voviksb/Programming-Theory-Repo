@@ -6,33 +6,40 @@ using System;
 
 public class EnemyBehavior : UnitBehaviour
 {
-    [SerializeField] private GameObject _playerObject;
+    //  [SerializeField] private GameObject _playerObject;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Animator _enemyAnimator;
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
     [SerializeField] private Rigidbody _enemyRigidbody;
+
+    private bool isAttacking;
+
     private Color _origEnemyColor;
 
     private bool isAlive = true;
-    private NavMeshAgent _enemyNavMeshAgent; 
+    public bool isAtacking;
+    private NavMeshAgent _enemyNavMeshAgent;
 
     private void Awake()
     {
         _enemyNavMeshAgent = GetComponent<NavMeshAgent>();
-    }
-    private void Start()
-    {
+        _origEnemyColor = _meshRenderer.material.color;
         _maxHp = 100;
-        _currentHp = _maxHp;
         _unitSpeed = 15;
         _enemyNavMeshAgent.speed = _unitSpeed;
         _playerTransform = GameObject.FindWithTag("player").GetComponent<Transform>();
-        _origEnemyColor = _meshRenderer.material.color;
+    }
+    private void OnEnable()
+    {
+        _currentHp = _maxHp;
+        OnDamageReceived(1);
+        isAlive = true;
+        _meshRenderer.material.color = _origEnemyColor;
     }
 
     public int EnemyHp
     {
-        get { return _currentHp;}
+        get { return _currentHp; }
         private set
         {
             _currentHp = value;
@@ -55,29 +62,34 @@ public class EnemyBehavior : UnitBehaviour
 
     public override void Attack()
     {
-        throw new System.NotImplementedException();
+        _enemyAnimator.SetBool("playerInRange", true);
     }
 
-    public override void ReceiveDamage() 
+    public override void ReceiveDamage()
     {
-            if (isAlive)
-            {
-                StartCoroutine(DamageFlash());
-                EnemyHp -= 30;
-            }
+        if (isAlive)
+        {
+            StartCoroutine("DamageFlash");
+            EnemyHp -= 30;
+        }
     }
 
     private void EnemyDeath()
     {
-            GameManager.Instance.OnEnemyDeath(this.gameObject);
-            OnDamageReceived(0);
-            isAlive = false;
-            _enemyNavMeshAgent.isStopped = true;
-            _enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
-            _enemyAnimator.SetFloat("UnitHp", 0); 
-            _meshRenderer.material.color = Color.black;
-            //Debug.Log("Color is black");
-            Destroy(gameObject, 1.7f);
+        OnDamageReceived(0);
+        isAlive = false;
+        _enemyNavMeshAgent.isStopped = true;
+        _enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        _enemyAnimator.SetFloat("UnitHp", 0);
+        _meshRenderer.material.color = Color.black;
+        StartCoroutine(DeathColorChange(1.5f));
+    }
+
+    private IEnumerator DeathColorChange(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        this.gameObject.SetActive(false);
+        GameManager.Instance.OnEnemyDeath(this.gameObject);
     }
 
     private IEnumerator DamageFlash()
@@ -88,6 +100,24 @@ public class EnemyBehavior : UnitBehaviour
         {
             _meshRenderer.material.color = _origEnemyColor;
         }
-        //Debug.Log("Color is back");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
+        {
+            isAtacking = true;
+            Attack();
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
+        {
+            _enemyAnimator.SetBool("playerInRange", false);
+            isAtacking = false;
+        }
     }
 }
