@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _currentDirVelocity = Vector2.zero;
     private PlayerBehaviour _playerBehaviour;
     private float _velocityY = 0.0f;
-    private float _gravity = -10.0f;
+    private float _gravity = -100.0f;
 
     private void Start()
     {

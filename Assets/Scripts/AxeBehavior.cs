@@ -6,11 +6,11 @@ public class AxeBehavior : MonoBehaviour
 {
     public EnemyBehavior enemyBehavior;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player) && enemyBehavior.isAtacking)
+        if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player) && enemyBehavior.isAttacking) 
         {
-            Debug.Log("Damage player");
+            player.ReceiveDamage();
         }
     }
 }

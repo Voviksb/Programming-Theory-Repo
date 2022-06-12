@@ -827,7 +827,7 @@ MonoBehaviour:
   - {x: -70, y: 1.3, z: 0}
   - {x: 70, y: 1.3, z: 70}
   _wavesNumber: 5
-  _enemiesNumber: 5
+  _enemiesNumber: 4
   _currentWave: 0
   poolCount: 15
   autoExpand: 1

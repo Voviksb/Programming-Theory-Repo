@@ -12,12 +12,11 @@ public class EnemyBehavior : UnitBehaviour
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
     [SerializeField] private Rigidbody _enemyRigidbody;
 
-    private bool isAttacking;
+    public bool isAttacking;
 
     private Color _origEnemyColor;
 
     private bool isAlive = true;
-    public bool isAtacking;
     private NavMeshAgent _enemyNavMeshAgent;
 
     private void Awake()
@@ -60,10 +59,7 @@ public class EnemyBehavior : UnitBehaviour
         _enemyNavMeshAgent.destination = _playerTransform.position;
     }
 
-    public override void Attack()
-    {
-        _enemyAnimator.SetBool("playerInRange", true);
-    }
+    
 
     public override void ReceiveDamage()
     {
@@ -106,10 +102,13 @@ public class EnemyBehavior : UnitBehaviour
     {
         if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
         {
-            isAtacking = true;
+            isAttacking = true;
             Attack();
-
         }
+    }
+    public override void Attack()
+    {
+        _enemyAnimator.SetBool("playerInRange", true);
     }
 
     private void OnTriggerExit(Collider other)
@@ -117,7 +116,7 @@ public class EnemyBehavior : UnitBehaviour
         if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
         {
             _enemyAnimator.SetBool("playerInRange", false);
-            isAtacking = false;
+            isAttacking = false;
         }
     }
 }
