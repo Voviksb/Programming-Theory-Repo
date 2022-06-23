@@ -6,11 +6,9 @@ using System;
 
 public class EnemyBehavior : UnitBehaviour
 {
-    //  [SerializeField] private GameObject _playerObject;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Animator _enemyAnimator;
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
-    [SerializeField] private Rigidbody _enemyRigidbody;
 
     public bool isAttacking;
 
@@ -59,8 +57,6 @@ public class EnemyBehavior : UnitBehaviour
         _enemyNavMeshAgent.destination = _playerTransform.position;
     }
 
-    
-
     public override void ReceiveDamage()
     {
         if (isAlive)
@@ -75,9 +71,9 @@ public class EnemyBehavior : UnitBehaviour
         OnDamageReceived(0);
         isAlive = false;
         _enemyNavMeshAgent.isStopped = true;
-        _enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
         _enemyAnimator.SetFloat("UnitHp", 0);
         _meshRenderer.material.color = Color.black;
+        LevelSpawner.Instance.OnEnemyDeath(this.gameObject);
         StartCoroutine(DeathColorChange(1.5f));
     }
 
@@ -85,7 +81,6 @@ public class EnemyBehavior : UnitBehaviour
     {
         yield return new WaitForSeconds(seconds);
         this.gameObject.SetActive(false);
-        GameManager.Instance.OnEnemyDeath(this.gameObject);
     }
 
     private IEnumerator DamageFlash()

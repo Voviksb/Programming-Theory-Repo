@@ -5,42 +5,44 @@ using UnityEngine;
 
 public class PoolMono<T> where T : MonoBehaviour
 {
-    [SerializeField] private T prefab { get; }
-    [SerializeField] private bool autoExpand { get; set; }
-    [SerializeField] private Transform container { get; }
+    [SerializeField] private T _prefab { get; }
+    [SerializeField] private bool _autoExpand { get; set; }
+    [SerializeField] private Transform _container { get; }
+    [SerializeField] private int _poolCount;
 
-    private List<T> pool;
+    private List<T> _pool;
 
     public PoolMono(T prefab, int count, Transform container, bool autoExpand)
     {
-        this.prefab = prefab;
-        this.container = container;
-        this.autoExpand = autoExpand;
+        _prefab = prefab;
+        _poolCount = count;
+        _container = container;
+        _autoExpand = autoExpand;
 
-        this.CreatePool(count);
+        CreatePool(_poolCount);
     }
 
     private void CreatePool(int count)
     {
-        this.pool = new List<T>();
+        _pool = new List<T>();
 
         for (int i = 0; i < count; i++)
         {
-            this.CreateObject();
+            CreateObject();
         }
     }
 
     private T CreateObject(bool isActiveByDefault = false)
     {
-        var createdObject = UnityEngine.Object.Instantiate(this.prefab, this.container);
+        var createdObject = UnityEngine.Object.Instantiate(_prefab, _container);
         createdObject.gameObject.SetActive(isActiveByDefault);
-        this.pool.Add(createdObject);
+        _pool.Add(createdObject);
         return createdObject;
     }
 
     public bool HasFreeElement(out T element)
     {
-        foreach (var mono in pool)
+        foreach (var mono in _pool)
         {
             if (!mono.gameObject.activeInHierarchy)
             {
@@ -55,16 +57,15 @@ public class PoolMono<T> where T : MonoBehaviour
 
     public T GetFreeElement()
     {
-        if (this.HasFreeElement(out var element))
+        if (HasFreeElement(out var element))
         {
             return element;
         }
 
-        if (this.autoExpand)
+        if (_autoExpand)
         {
-            return this.CreateObject(true);
+            return CreateObject(true);
         }
-
         throw new Exception($"No free elements in pool of type {typeof(T)}");
     }
 }

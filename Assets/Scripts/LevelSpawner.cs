@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameManager : MonoBehaviour
+public class LevelSpawner : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static LevelSpawner Instance { get; private set; }
 
     
     [SerializeField] Vector3[] spawnPositions = new Vector3[5];
-    [SerializeField] private int _wavesNumber;
-    [SerializeField] private int _enemiesNumber;
+    [SerializeField] private int _wavesLeft;
+    [SerializeField] private int _enemiesToSpawn;
+    [SerializeField] private int _enemiesAlive;
     [SerializeField] private int _currentWave = 0;
 
-    [SerializeField] private int poolCount = 8;
-    [SerializeField] private bool autoExpand = false;
     [SerializeField] private EnemyBehavior _enemyPrefab;
-    private PoolMono<EnemyBehavior> enemiesPool;
+    private PoolMono<EnemyBehavior> _enemiesPool;
 
     public delegate void GameManagerHandler(int value);
     public event GameManagerHandler OnWavesChangedEvent;
@@ -38,33 +37,31 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        this.OnWavesChangedEvent?.Invoke(_currentWave);
-        this.enemiesPool = new PoolMono<EnemyBehavior>(this._enemyPrefab, this.poolCount, this.transform, this.autoExpand);
-        SpawnEnemies(_enemiesNumber);
+        _enemiesPool = new PoolMono<EnemyBehavior>(_enemyPrefab, 8, this.transform, true);
+        SpawnEnemies(_enemiesToSpawn);
     }
 
     public void OnEnemyDeath(GameObject enemy)
     {
         enemies.Remove(enemy);
         this.OnEnemiesCountChangeEvent?.Invoke(enemies.Count);
-        if (enemies.Count == 0 && _wavesNumber > 0)
+        if (enemies.Count == 0 && _wavesLeft > 0)
         {
-            _enemiesNumber++;
-            SpawnEnemies(_enemiesNumber);
+            _enemiesToSpawn++;
+            SpawnEnemies(_enemiesToSpawn);
         }
     }
 
     private void SpawnEnemies(int _enemiesToSpawn)
     {
-        _wavesNumber--;
+        _wavesLeft--;
         _currentWave++;
         this.OnWavesChangedEvent?.Invoke(_currentWave);
         for (int i = 0; i < _enemiesToSpawn; i++)
         {
-            var enemyCreated = this.enemiesPool.GetFreeElement();
+            var enemyCreated = _enemiesPool.GetFreeElement();
             enemyCreated.transform.position = spawnPositions[Random.Range(0, spawnPositions.Length)];
             enemies.Add(enemyCreated.gameObject);
-           // enemies.Add(Instantiate(_enemyPrefab.gameObject, spawnPositions[Random.Range(0, spawnPositions.Length)], _enemyPrefab.transform.rotation));
         }
         this.OnEnemiesCountChangeEvent?.Invoke(enemies.Count);
     }

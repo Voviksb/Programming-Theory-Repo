@@ -10,8 +10,8 @@ public class UserInterface : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.OnWavesChangedEvent += OnWavesChanged;
-        GameManager.Instance.OnEnemiesCountChangeEvent += OnEnemiesCountChange;
+        LevelSpawner.Instance.OnWavesChangedEvent += OnWavesChanged;
+        LevelSpawner.Instance.OnEnemiesCountChangeEvent += OnEnemiesCountChange;
     }
 
     private void OnEnemiesCountChange(int enemiesCount)
@@ -26,7 +26,7 @@ public class UserInterface : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.Instance.OnWavesChangedEvent -= OnWavesChanged;
-        GameManager.Instance.OnEnemiesCountChangeEvent -= OnEnemiesCountChange;
+        LevelSpawner.Instance.OnWavesChangedEvent -= OnWavesChanged;
+        LevelSpawner.Instance.OnEnemiesCountChangeEvent -= OnEnemiesCountChange;
     }
 }
