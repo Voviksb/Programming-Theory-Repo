@@ -38,10 +38,6 @@ public class PlayerBehaviour : UnitBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ReceiveDamage();
-        }
     }
     public override void Attack()
     {

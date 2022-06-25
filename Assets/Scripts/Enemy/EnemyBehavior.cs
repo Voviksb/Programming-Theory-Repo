@@ -9,6 +9,7 @@ public class EnemyBehavior : UnitBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Animator _enemyAnimator;
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
+  //  [SerializeField] EnemiesSpawner _enemiesSpawner;
 
     public bool isAttacking;
 
@@ -73,7 +74,7 @@ public class EnemyBehavior : UnitBehaviour
         _enemyNavMeshAgent.isStopped = true;
         _enemyAnimator.SetFloat("UnitHp", 0);
         _meshRenderer.material.color = Color.black;
-        LevelSpawner.Instance.OnEnemyDeath(this.gameObject);
+        EnemiesSpawner.Instance.OnEnemyDeath(this.gameObject);
         StartCoroutine(DeathColorChange(1.5f));
     }
 

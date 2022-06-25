@@ -7,11 +7,14 @@ public class UserInterface : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _waveText;
     [SerializeField] private TextMeshProUGUI _enemiesText;
+    [SerializeField] private TextMeshProUGUI _timeTillNextWave;
+    [SerializeField] private EnemiesSpawner _levelSpawner;
+    [SerializeField] private WavesHandler _wavesHandler;
 
     private void Awake()
     {
-        LevelSpawner.Instance.OnWavesChangedEvent += OnWavesChanged;
-        LevelSpawner.Instance.OnEnemiesCountChangeEvent += OnEnemiesCountChange;
+        _wavesHandler.OnWavesChangedEvent += OnWavesChanged;
+        _levelSpawner.OnEnemiesCountChangeEvent += OnEnemiesCountChange;
     }
 
     private void OnEnemiesCountChange(int enemiesCount)
@@ -24,9 +27,21 @@ public class UserInterface : MonoBehaviour
         _waveText.text = "Wave: " + waveNumber;
     }
 
+    public void SwitchTimer()
+    {
+        _timeTillNextWave.gameObject.active = !_timeTillNextWave.gameObject.active;
+    }
+
+    public void TimeTillNextWave(int secondsLeft)
+    {
+        _timeTillNextWave.text = secondsLeft.ToString();
+    }
+
     private void OnDisable()
     {
-        LevelSpawner.Instance.OnWavesChangedEvent -= OnWavesChanged;
-        LevelSpawner.Instance.OnEnemiesCountChangeEvent -= OnEnemiesCountChange;
+        _wavesHandler.OnWavesChangedEvent -= OnWavesChanged;
+        _levelSpawner.OnEnemiesCountChangeEvent -= OnEnemiesCountChange;
     }
+
+
 }
