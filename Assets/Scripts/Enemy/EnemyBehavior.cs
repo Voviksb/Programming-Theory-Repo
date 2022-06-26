@@ -7,30 +7,28 @@ using System;
 public class EnemyBehavior : UnitBehaviour
 {
     [SerializeField] private Transform _playerTransform;
+    [SerializeField] private PlayerBehaviour _player;
     [SerializeField] private Animator _enemyAnimator;
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
     [SerializeField] private NavMeshAgent _enemyNavMeshAgent;
+    [SerializeField] private ParticleSystem _bloodFlash;
+    AnimatorClipInfo[] animatorinfo;
 
-    public bool isAttacking;
-
-    private Color _origEnemyColor;
-
-    private bool isAlive = true;
+    [SerializeField] private bool isAlive = true;
     
     private void Awake()
     {
-        _origEnemyColor = _meshRenderer.material.color;
         _maxHp = 100;
         _unitSpeed = 15;
         _enemyNavMeshAgent.speed = _unitSpeed;
-        _playerTransform = GameObject.FindWithTag("player").GetComponent<Transform>();
+        _player = GameObject.FindWithTag("player").GetComponent<PlayerBehaviour>();
+        _playerTransform = _player.GetComponent<Transform>();
     }
     private void OnEnable()
     {
         _currentHp = _maxHp;
         OnDamageReceived(1);
         isAlive = true;
-        _meshRenderer.material.color = _origEnemyColor;
     }
 
     public int EnemyHp
@@ -41,6 +39,7 @@ public class EnemyBehavior : UnitBehaviour
             _currentHp = value;
             if (_currentHp <= 0 && isAlive)
             {
+                OnDamageReceived(0);
                 EnemyDeath();
             }
             else
@@ -50,51 +49,50 @@ public class EnemyBehavior : UnitBehaviour
             }
         }
     }
-
+   // (_playerTransform.position - transform.position).magnitude > 5f
     private void Update()
     {
-        if (!isAttacking)
+        if (!IsAttacking)
         {
+         //   _enemyNavMeshAgent.isStopped = false;
             _enemyNavMeshAgent.destination = _playerTransform.position;
+        }
+        else
+        {
+            _enemyNavMeshAgent.destination = transform.position;
         }
     }
 
-    public override void ReceiveDamage()
+    public override void ReceiveDamage() 
     {
         if (isAlive)
         {
-            StartCoroutine("DamageFlash");
             EnemyHp -= 10;
         }
     }
-
-    private void EnemyDeath()
+    public void ReceiveShot(Vector3 hitPosition)
     {
-        OnDamageReceived(0);
+        if (isAlive)
+        {
+            _bloodFlash.transform.position = hitPosition;
+            _bloodFlash.Play();
+            ReceiveDamage();
+        }
+    }
+    private void EnemyDeath()
+    {   
         isAlive = false;
         _enemyNavMeshAgent.isStopped = true;
         _enemyAnimator.SetFloat("UnitHp", 0);
-        _meshRenderer.material.color = Color.black;
         EnemiesSpawner.Instance.OnEnemyDeath(this.gameObject);
-        StartCoroutine(DeathColorChange(1.5f));
+        StartCoroutine(DestroyOnDeath(1.5f));
     }
 
-    private IEnumerator DeathColorChange(float seconds)
+    private IEnumerator DestroyOnDeath(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         this.gameObject.SetActive(false);
     }
-
-    private IEnumerator DamageFlash()
-    {
-        _meshRenderer.material.color = Color.red;
-        yield return new WaitForSeconds(0.25f);
-        if (isAlive)
-        {
-            _meshRenderer.material.color = _origEnemyColor;
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
@@ -104,7 +102,7 @@ public class EnemyBehavior : UnitBehaviour
     }
     public override void Attack()
     {
-        isAttacking = true;
+        this.IsAttacking = true;
         _enemyAnimator.SetBool("playerInRange", true);
     }
 
@@ -113,7 +111,7 @@ public class EnemyBehavior : UnitBehaviour
         if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
         {
             _enemyAnimator.SetBool("playerInRange", false);
-            isAttacking = false;
+            this.IsAttacking = false;
         }
     }
 }

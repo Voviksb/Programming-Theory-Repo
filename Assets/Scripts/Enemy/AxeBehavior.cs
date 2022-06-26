@@ -8,7 +8,7 @@ public class AxeBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player) && enemyBehavior.isAttacking) 
+        if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player) && enemyBehavior.IsAttacking) 
         {
             player.ReceiveDamage();
         }

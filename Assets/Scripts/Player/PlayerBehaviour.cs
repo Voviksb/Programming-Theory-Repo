@@ -4,27 +4,15 @@ using UnityEngine;
 
 public class PlayerBehaviour : UnitBehaviour
 {
-    [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] private Transform _weaponMuzzlePos;
-    [SerializeField] private float _shootingCooldown = 0f;
-    [SerializeField] private float _fireRate = 0.11f;
-    [SerializeField] private ParticleSystem _muzzleFlash;
-    [SerializeField] private AudioSource _shootingSource;
-    public bool isAttacking = false;
+    
+    [SerializeField] private Weapon weapon;
+
 
     private void Start()
     {
         _maxHp = 100;
         _currentHp = _maxHp;
         _unitSpeed = 40;
-    }
-
-    private void Update()
-    {
-        if(_shootingCooldown > 0)
-        {
-            _shootingCooldown -= Time.deltaTime;
-        }
     }
 
     public int UnitSpeed
@@ -52,14 +40,8 @@ public class PlayerBehaviour : UnitBehaviour
     }
     public override void Attack()
     {
-        isAttacking = true;
-        if (_shootingCooldown <= 0)
-        {
-            _shootingSource.PlayOneShot(_shootingSource.clip);
-            _shootingCooldown = _fireRate;
-            GameObject bullet = Instantiate(_bulletPrefab, _weaponMuzzlePos.position, _weaponMuzzlePos.transform.rotation) as GameObject;
-            _muzzleFlash.Play();
-        }
+        IsAttacking = true;
+        weapon.Shoot();
     }
     public override void ReceiveDamage()
     {
@@ -78,4 +60,12 @@ public class PlayerBehaviour : UnitBehaviour
             base.OnDamageReceived(_currentHpAsPercentage);
         }
     }
+
+   /* public void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.TryGetComponent<EnemyDetectCollision>(out EnemyDetectCollision enemy) && enemy._enemy.IsAttacking)
+        {
+            ReceiveDamage();
+        }
+    }*/
 }

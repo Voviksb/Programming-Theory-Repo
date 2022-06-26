@@ -17,7 +17,7 @@ public class UserInterface : MonoBehaviour
         _levelSpawner.OnEnemiesCountChangeEvent += OnEnemiesCountChange;
     }
 
-    private void OnEnemiesCountChange(int enemiesCount)
+    protected virtual void OnEnemiesCountChange(int enemiesCount)
     {
         _enemiesText.text = "Enemies left: " + enemiesCount;
     }
