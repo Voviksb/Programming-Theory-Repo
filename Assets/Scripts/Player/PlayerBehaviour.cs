@@ -6,11 +6,25 @@ public class PlayerBehaviour : UnitBehaviour
 {
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _weaponMuzzlePos;
+    [SerializeField] private float _shootingCooldown = 0f;
+    [SerializeField] private float _fireRate = 0.11f;
+    [SerializeField] private ParticleSystem _muzzleFlash;
+    [SerializeField] private AudioSource _shootingSource;
+    public bool isAttacking = false;
+
     private void Start()
     {
         _maxHp = 100;
         _currentHp = _maxHp;
         _unitSpeed = 40;
+    }
+
+    private void Update()
+    {
+        if(_shootingCooldown > 0)
+        {
+            _shootingCooldown -= Time.deltaTime;
+        }
     }
 
     public int UnitSpeed
@@ -36,17 +50,17 @@ public class PlayerBehaviour : UnitBehaviour
             UpdateHpBar();
         }
     }
-    private void Update()
-    {
-    }
     public override void Attack()
     {
-        GameObject bullet = Instantiate(_bulletPrefab, _weaponMuzzlePos.position, _weaponMuzzlePos.transform.rotation) as GameObject;
-        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        bulletRb.velocity = _weaponMuzzlePos.transform.forward * 400f;
-        Destroy(bullet, 3f);
+        isAttacking = true;
+        if (_shootingCooldown <= 0)
+        {
+            _shootingSource.PlayOneShot(_shootingSource.clip);
+            _shootingCooldown = _fireRate;
+            GameObject bullet = Instantiate(_bulletPrefab, _weaponMuzzlePos.position, _weaponMuzzlePos.transform.rotation) as GameObject;
+            _muzzleFlash.Play();
+        }
     }
-
     public override void ReceiveDamage()
     {
         UnitHP -= 10;

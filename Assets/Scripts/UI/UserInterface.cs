@@ -42,6 +42,4 @@ public class UserInterface : MonoBehaviour
         _wavesHandler.OnWavesChangedEvent -= OnWavesChanged;
         _levelSpawner.OnEnemiesCountChangeEvent -= OnEnemiesCountChange;
     }
-
-
 }

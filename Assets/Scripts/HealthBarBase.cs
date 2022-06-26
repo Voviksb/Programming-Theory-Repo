@@ -11,7 +11,6 @@ public class HealthBarBase : MonoBehaviour
     {
         healthBarOwner.OnDamageReceivedEvent += OnDamageReceived;
     }
-
     void OnDestroy()
     {
         healthBarOwner.OnDamageReceivedEvent -= OnDamageReceived;

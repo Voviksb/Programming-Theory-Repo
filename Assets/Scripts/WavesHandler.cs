@@ -59,5 +59,4 @@ public class WavesHandler : MonoBehaviour
         StartNextWave();
         yield break;
     }
-
 }

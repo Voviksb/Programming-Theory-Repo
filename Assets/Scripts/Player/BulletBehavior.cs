@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
+    [SerializeField] private Rigidbody _bulletRb;
+
+    private void Start()
+    {
+        _bulletRb.velocity = transform.forward * 120f;
+        Destroy(this, 3f);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.TryGetComponent<EnemyBehavior>(out EnemyBehavior enemy))
@@ -15,5 +23,10 @@ public class BulletBehavior : MonoBehaviour
         {
             Destroy(gameObject, 3f);
         }
+    }
+
+    private void Update()
+    {
+       // this.gameObject.transform.Translate(transform.forward * 10f);
     }
 }

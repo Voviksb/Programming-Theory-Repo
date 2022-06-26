@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 23, y: 3}
+  m_SizeDelta: {x: 23, y: 2.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6234807544908784358
 CanvasRenderer:
@@ -127,7 +127,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.44}
+  m_AnchoredPosition: {x: 0, y: 2.62}
   m_SizeDelta: {x: 40, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3136314321443892803
@@ -1187,6 +1187,7 @@ MonoBehaviour:
   _playerTransform: {fileID: 0}
   _enemyAnimator: {fileID: 7537164333021755360}
   _meshRenderer: {fileID: 7537164331047205988}
+  _enemyNavMeshAgent: {fileID: 1532636303}
   isAttacking: 0
 --- !u!135 &1532636302
 SphereCollider:
@@ -1234,5 +1235,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.6666667, y: 3.094606, z: 4.697614}
-  m_Center: {x: -0.16666667, y: 1.0473013, z: 1.1821396}
+  m_Size: {x: 2.6666667, y: 3.094606, z: 3.8670292}
+  m_Center: {x: -0.16666667, y: 1.0473013, z: 0.76684606}

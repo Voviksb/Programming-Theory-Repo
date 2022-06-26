@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 3.5f;
     [SerializeField] [Range(0.0f, 0.5f)] private float _mouseSmoothTime = 0.3f;
 
-    [SerializeField] bool lockCursor = true;
+  //  [SerializeField] bool lockCursor = false;
 
     private float _cameraPitch = 0.0f;
     private Vector2 _currentMouseDelta = Vector2.zero;
@@ -17,11 +17,11 @@ public class CameraController : MonoBehaviour
     
     private void Start()
     {
-        if (lockCursor)
+        /*if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-        }
+        }*/
     }
     private void Update()
     {

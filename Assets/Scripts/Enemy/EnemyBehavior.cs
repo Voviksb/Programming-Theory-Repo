@@ -9,18 +9,16 @@ public class EnemyBehavior : UnitBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Animator _enemyAnimator;
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
-  //  [SerializeField] EnemiesSpawner _enemiesSpawner;
+    [SerializeField] private NavMeshAgent _enemyNavMeshAgent;
 
     public bool isAttacking;
 
     private Color _origEnemyColor;
 
     private bool isAlive = true;
-    private NavMeshAgent _enemyNavMeshAgent;
-
+    
     private void Awake()
     {
-        _enemyNavMeshAgent = GetComponent<NavMeshAgent>();
         _origEnemyColor = _meshRenderer.material.color;
         _maxHp = 100;
         _unitSpeed = 15;
@@ -55,7 +53,10 @@ public class EnemyBehavior : UnitBehaviour
 
     private void Update()
     {
-        _enemyNavMeshAgent.destination = _playerTransform.position;
+        if (!isAttacking)
+        {
+            _enemyNavMeshAgent.destination = _playerTransform.position;
+        }
     }
 
     public override void ReceiveDamage()
@@ -63,7 +64,7 @@ public class EnemyBehavior : UnitBehaviour
         if (isAlive)
         {
             StartCoroutine("DamageFlash");
-            EnemyHp -= 30;
+            EnemyHp -= 10;
         }
     }
 
@@ -98,12 +99,12 @@ public class EnemyBehavior : UnitBehaviour
     {
         if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
         {
-            isAttacking = true;
             Attack();
         }
     }
     public override void Attack()
     {
+        isAttacking = true;
         _enemyAnimator.SetBool("playerInRange", true);
     }
 

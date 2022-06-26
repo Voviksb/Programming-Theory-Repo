@@ -8,50 +8,42 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _verticalInput;
     [SerializeField] [Range(0.0f, 0.5f)] private float _moveSmoothTime = 0.3f;
 
-    private CharacterController _playerController;
+    [SerializeField] private float _moveSpeed = 10f;
+    [SerializeField] private float _rotateSpeed = 10f;
 
-    private Vector2 _currentDir = Vector2.zero;
-    private Vector2 _currentDirVelocity = Vector2.zero;
-    private PlayerBehaviour _playerBehaviour;
-    private float _velocityY = 0.0f;
-    private float _gravity = -100.0f;
+    [SerializeField] private Animator _playerAnimator;
+
+    public bool isMoving;
+
+    private CharacterController _playerController;
 
     private void Start()
     {
-        _playerController = GetComponent<CharacterController>();
-        _playerBehaviour = GetComponent<PlayerBehaviour>();
+        _playerController = GetComponent<CharacterController>(); 
     }
 
     private void Update()
     {
-        UpdateMovement();
-        DetectAttack();
-    }
-
-    private void UpdateMovement()
-    {
-        Vector2 targetDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        targetDir.Normalize();
-
-        _currentDir = Vector2.SmoothDamp(_currentDir, targetDir, ref _currentDirVelocity, _moveSmoothTime);
-
-        if (_playerController.isGrounded)
+        if(_playerController.velocity.magnitude == 0)
         {
-            _velocityY = 0.0f;
+            _playerAnimator.SetBool("isMoving", false);
         }
-
-        _velocityY += _gravity * Time.deltaTime;
-
-        Vector3 velocity = (transform.forward * _currentDir.y + transform.right * _currentDir.x) * _playerBehaviour.UnitSpeed + Vector3.up * _velocityY;
-
-        _playerController.Move(velocity * Time.deltaTime);
     }
 
-    private void DetectAttack()
+    public void MovePlayer(Vector3 moveDirection)
     {
-        if (Input.GetMouseButtonDown(0))
+        _playerAnimator.SetBool("isMoving", true);
+        moveDirection = moveDirection * _moveSpeed;
+        _playerController.Move(moveDirection * Time.deltaTime);
+    }
+
+    public void RotatePlayer(Vector3 moveDirection)
+    {
+        if (Vector3.Angle(transform.forward, moveDirection) > 0)
         {
-            _playerBehaviour.Attack();
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, moveDirection, _rotateSpeed, 0);
+
+            transform.rotation = Quaternion.LookRotation(newDirection);
         }
     }
 }
