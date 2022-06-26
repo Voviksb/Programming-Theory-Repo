@@ -1502,7 +1502,7 @@ MonoBehaviour:
   _reloadTime: 1
   _shootingCooldown: 0
   _fireRate: 0.11
-  _muzzleFlash: {fileID: 3130481091991959454, guid: ddbe48f5ff1188f4f86394f8e7778cea, type: 3}
+  _muzzleFlash: {fileID: 198792768279059487}
   _weaponMuzzlePos: {fileID: 1732576751}
   _shootingSource: {fileID: 1199359500}
   _bulletPrefab: {fileID: 7186898164972224585, guid: e0d42f71db823d8428a397312c58e19a, type: 3}
@@ -2603,6 +2603,11 @@ Animator:
 --- !u!4 &4639869275068059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3000392272790469914, guid: ddbe48f5ff1188f4f86394f8e7778cea, type: 3}
+  m_PrefabInstance: {fileID: 3005012624979094401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &198792768279059487 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3130481091991959454, guid: ddbe48f5ff1188f4f86394f8e7778cea, type: 3}
   m_PrefabInstance: {fileID: 3005012624979094401}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3005012624979094401
