@@ -48,6 +48,7 @@ public class JoystickHandler : MonoBehaviour, IDragHandler, IPointerDownHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("AUTOAIMING");
         ClickEffect();
 
         Vector2 joystickBackgroundPosition;

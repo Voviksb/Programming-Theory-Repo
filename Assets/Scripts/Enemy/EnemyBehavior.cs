@@ -12,6 +12,7 @@ public class EnemyBehavior : UnitBehaviour
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
     [SerializeField] private NavMeshAgent _enemyNavMeshAgent;
     [SerializeField] private ParticleSystem _bloodFlash;
+    [SerializeField] private AudioSource _enemySource;
     AnimatorClipInfo[] animatorinfo;
 
     [SerializeField] private bool isAlive = true;
@@ -74,6 +75,7 @@ public class EnemyBehavior : UnitBehaviour
     {
         if (isAlive)
         {
+            _enemySource.PlayOneShot(_enemySource.clip);
             _bloodFlash.transform.position = hitPosition;
             _bloodFlash.Play();
             ReceiveDamage();
