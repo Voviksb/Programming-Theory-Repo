@@ -114,4 +114,9 @@ public class EnemyBehavior : UnitBehaviour
             this.IsAttacking = false;
         }
     }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("collision detected on child");
+    }
 }

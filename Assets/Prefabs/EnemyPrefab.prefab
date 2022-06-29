@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 6380328688324656678}
   healthBarOwner: {fileID: 4018216725190166428}
+  _healthBarBackground: {fileID: 0}
 --- !u!1 &4169750506088359953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,11 +1185,14 @@ MonoBehaviour:
   _currentHp: 0
   _unitSpeed: 0
   _maxHp: 0
+  _isAttacking: 0
   _playerTransform: {fileID: 0}
+  _player: {fileID: 0}
   _enemyAnimator: {fileID: 7537164333021755360}
   _meshRenderer: {fileID: 7537164331047205988}
   _enemyNavMeshAgent: {fileID: 1532636303}
-  isAttacking: 0
+  _bloodFlash: {fileID: 0}
+  isAlive: 1
 --- !u!135 &1532636302
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -19633,7 +19633,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletRb: {fileID: 4533661672985481462}
-  _bloodFlash: {fileID: 5218902203935754577}
 --- !u!1 &7231491869612737658
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,8 +14,10 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.TryGetComponent<EnemyDetectCollision>(out EnemyDetectCollision enemy))
+     //   Debug.Log("Collided with smth"+ collision.gameObject.name);
+        if (collision.gameObject.TryGetComponent<EnemyBehavior>(out EnemyBehavior enemy))
         {
+            Debug.Log("Collided with enemy");
             enemy?.ReceiveShot(transform.position);    
             Destroy(gameObject);
         }
@@ -23,10 +25,5 @@ public class BulletBehavior : MonoBehaviour
         {
             Destroy(gameObject, 3f);
         }
-    }
-
-    private void Update()
-    {
-       // this.gameObject.transform.Translate(transform.forward * 10f);
     }
 }

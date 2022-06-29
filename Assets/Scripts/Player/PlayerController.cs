@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerAnimator.SetBool("isMoving", true);
         moveDirection = moveDirection * _moveSpeed;
+        moveDirection.y = GravityHandler.GravityHandling(_playerController);
         _playerController.Move(moveDirection * Time.deltaTime);
     }
 
