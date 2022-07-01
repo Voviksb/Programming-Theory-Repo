@@ -13,18 +13,20 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Animator _playerAnimator;
 
+    
+
     public bool isMoving;
 
     private CharacterController _playerController;
 
     private void Start()
     {
-        _playerController = GetComponent<CharacterController>(); 
+        _playerController = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
-        if(_playerController.velocity.magnitude == 0)
+        if (_playerController.velocity.magnitude == 0)
         {
             _playerAnimator.SetBool("isMoving", false);
         }

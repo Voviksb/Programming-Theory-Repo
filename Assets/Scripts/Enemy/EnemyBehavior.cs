@@ -7,13 +7,26 @@ using System;
 public class EnemyBehavior : UnitBehaviour
 {
     [SerializeField] private Transform _playerTransform;
-    [SerializeField] private PlayerBehaviour _player;
     [SerializeField] private Animator _enemyAnimator;
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
     [SerializeField] private NavMeshAgent _enemyNavMeshAgent;
     [SerializeField] private ParticleSystem _bloodFlash;
     [SerializeField] private AudioSource _enemySource;
+    [SerializeField] private Rigidbody _enemyRb;
+    [SerializeField] private bool _isAttacking = false;
     AnimatorClipInfo[] animatorinfo;
+
+    public bool IsAttacking
+    {
+        get
+        {
+            return _isAttacking;
+        }
+        set
+        {
+            _isAttacking = value;
+        }
+    }
 
     [SerializeField] private bool isAlive = true;
     
@@ -22,14 +35,15 @@ public class EnemyBehavior : UnitBehaviour
         _maxHp = 100;
         _unitSpeed = 15;
         _enemyNavMeshAgent.speed = _unitSpeed;
-        _player = GameObject.FindWithTag("player").GetComponent<PlayerBehaviour>();
-        _playerTransform = _player.GetComponent<Transform>();
+        _playerTransform = GameObject.FindWithTag("player").GetComponent<Transform>();
     }
     private void OnEnable()
     {
         _currentHp = _maxHp;
         OnDamageReceived(1);
         isAlive = true;
+        _enemyRb.detectCollisions = true;
+        _enemyRb.isKinematic = false;
     }
 
     public int EnemyHp
@@ -50,17 +64,18 @@ public class EnemyBehavior : UnitBehaviour
             }
         }
     }
-   // (_playerTransform.position - transform.position).magnitude > 5f
+
     private void Update()
     {
-        if (!IsAttacking)
+        if (!_isAttacking)
         {
-         //   _enemyNavMeshAgent.isStopped = false;
             _enemyNavMeshAgent.destination = _playerTransform.position;
         }
         else
         {
-            _enemyNavMeshAgent.destination = transform.position;
+            _enemyNavMeshAgent.velocity = Vector3.zero;
+            _enemyNavMeshAgent.ResetPath();
+            //  _enemyNavMeshAgent.destination = transform.position;
         }
     }
 
@@ -84,6 +99,8 @@ public class EnemyBehavior : UnitBehaviour
     private void EnemyDeath()
     {   
         isAlive = false;
+        _enemyRb.detectCollisions = false;
+        _enemyRb.isKinematic = true;
         _enemyNavMeshAgent.isStopped = true;
         _enemyAnimator.SetFloat("UnitHp", 0);
         EnemiesSpawner.Instance.OnEnemyDeath(this.gameObject);
@@ -95,6 +112,14 @@ public class EnemyBehavior : UnitBehaviour
         yield return new WaitForSeconds(seconds);
         this.gameObject.SetActive(false);
     }
+
+    public override void Attack()
+    {
+       // _enemyRb.isKinematic = true;
+        _isAttacking = true;
+        _enemyAnimator.SetBool("playerInRange", true);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
@@ -102,23 +127,22 @@ public class EnemyBehavior : UnitBehaviour
             Attack();
         }
     }
-    public override void Attack()
-    {
-        this.IsAttacking = true;
-        _enemyAnimator.SetBool("playerInRange", true);
-    }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
         {
             _enemyAnimator.SetBool("playerInRange", false);
-            this.IsAttacking = false;
+            _isAttacking = false;
         }
     }
 
-    public void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("collision detected on child");
+        if (collision.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player) && _isAttacking)
+        {
+            player.ReceiveDamage();
+            _isAttacking = false;
+        }
     }
 }

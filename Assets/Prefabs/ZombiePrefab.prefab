@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &353641844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 353641845}
+  - component: {fileID: 353641846}
+  m_Layer: 0
+  m_Name: HandAttackContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &353641845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353641844}
+  m_LocalRotation: {x: -0.6787699, y: 0.7038759, z: -0, w: 0.20935665}
+  m_LocalPosition: {x: -0.094, y: 0.007, z: -0.005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 444223747565031571}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &353641846
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353641844}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.12
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &133888274306584970
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +425,6 @@ GameObject:
   m_Component:
   - component: {fileID: 444223747565032981}
   - component: {fileID: 444223747570730547}
-  - component: {fileID: 6767397874382228450}
   - component: {fileID: 444223747565519476}
   m_Layer: 0
   m_Name: Body_01_tanktop
@@ -471,19 +514,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.07043728, y: 0.021879755, z: 0.000000029802322}
     m_Extent: {x: 0.52468824, y: 0.24432853, z: 0.75921905}
   m_DirtyAABB: 0
---- !u!114 &6767397874382228450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444223747565519477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2aabf97c09b94f429bd4c8a4fada464, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemy: {fileID: 8788288486236306908}
 --- !u!64 &444223747565519476
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1106,6 +1136,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_Children:
   - {fileID: 444223747565031705}
+  - {fileID: 353641845}
   m_Father: {fileID: 444223747565031569}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1245,7 +1276,6 @@ GameObject:
   m_Component:
   - component: {fileID: 444223747565031699}
   - component: {fileID: 6767397873166236778}
-  - component: {fileID: 6767397873166236781}
   m_Layer: 0
   m_Name: HEAD_CONTAINER
   m_TagString: Untagged
@@ -1282,19 +1312,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300360, guid: f88c8301226fd194cbbc64e25b20d567, type: 3}
---- !u!114 &6767397873166236781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444223747565522291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2aabf97c09b94f429bd4c8a4fada464, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemy: {fileID: 8788288486236306908}
 --- !u!1 &444223747565522295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,14 +1386,14 @@ MonoBehaviour:
   _currentHp: 0
   _unitSpeed: 0
   _maxHp: 0
-  _isAttacking: 0
   _playerTransform: {fileID: 0}
-  _player: {fileID: 0}
   _enemyAnimator: {fileID: 444223747574923089}
   _meshRenderer: {fileID: 444223747570730547}
   _enemyNavMeshAgent: {fileID: 8788288486236306896}
   _bloodFlash: {fileID: 7444415473814016703}
   _enemySource: {fileID: -5916785774322082686}
+  _enemyRb: {fileID: 444223747565522294}
+  _isAttacking: 0
   isAlive: 1
 --- !u!65 &8788288486236306909
 BoxCollider:
@@ -1389,8 +1406,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0012785, y: 1.6666666, z: 1.0693661}
-  m_Center: {x: -0.011556519, y: 0.7777778, z: 0.11686495}
+  m_Size: {x: 1.7520291, y: 1.6666666, z: 1.6775229}
+  m_Center: {x: -0.015578429, y: 0.7777778, z: 0.273951}
 --- !u!195 &8788288486236306896
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1428,7 +1445,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!82 &-5916785774322082686
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1440,14 +1457,14 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c6504f32aee100b4789c8a890bfd2164, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 1
+  Priority: 128
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

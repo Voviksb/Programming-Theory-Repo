@@ -5,14 +5,34 @@ using UnityEngine;
 public class PlayerBehaviour : UnitBehaviour
 {
     
-    [SerializeField] private Weapon weapon;
+    [SerializeField] private Weapon _weapon;
+    [SerializeField] private bool _isAttacking = false;
 
+    public bool IsAttacking
+    {
+        get
+        {
+            return _isAttacking;
+        }
+        set
+        {
+            _isAttacking = value;
+        }
+    }
 
     private void Start()
     {
         _maxHp = 100;
         _currentHp = _maxHp;
         _unitSpeed = 40;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _weapon.Shoot();
+        }
     }
 
     public int UnitSpeed
@@ -41,7 +61,7 @@ public class PlayerBehaviour : UnitBehaviour
     public override void Attack()
     {
         IsAttacking = true;
-        weapon.Shoot();
+        _weapon.Shoot();
     }
     public override void ReceiveDamage()
     {
@@ -61,7 +81,7 @@ public class PlayerBehaviour : UnitBehaviour
         }
     }
 
-   /* public void OnCollisionEnter(Collision collision)
+/*    public void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.TryGetComponent<EnemyDetectCollision>(out EnemyDetectCollision enemy) && enemy._enemy.IsAttacking)
         {

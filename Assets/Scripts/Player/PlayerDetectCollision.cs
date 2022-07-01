@@ -9,8 +9,8 @@ public class PlayerDetectCollision : MonoBehaviour
     {
         _player.OnCollisionEnter(collision);
     }*/
-    public void ReceiveDamage()
+/*    public void ReceiveDamage()
     {
         _player.ReceiveDamage();
-    }
+    }*/
 }

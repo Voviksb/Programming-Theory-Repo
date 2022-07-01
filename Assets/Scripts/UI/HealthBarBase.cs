@@ -17,7 +17,7 @@ public class HealthBarBase : MonoBehaviour
     }
     protected virtual void OnDamageReceived(float valueAsPercentage)
     {
-        Debug.Log("Calling parent class" + healthBarOwner.name);
+       // Debug.Log("Calling parent class" + healthBarOwner.name);
         _healthBar.fillAmount = valueAsPercentage;
     }
 }
