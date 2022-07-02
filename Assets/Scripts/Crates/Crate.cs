@@ -76,10 +76,9 @@ public class Crate : MonoBehaviour
     private void DropItems()
     {
         var reward = Instantiate(_reward, this.transform.position + Vector3.up * 2f, Quaternion.LookRotation(Vector3.left));
-       /* Rigidbody rewardRb = reward.GetComponent<Rigidbody>();
-        rewardRb.AddForce(Vector3.up * 7f, ForceMode.Impulse);
-        reward.transform.position = Vector3.Lerp(reward.transform.position, Vector3.up * 2f, 3f);*/
+        Rigidbody rewardRb = reward.GetComponent<Rigidbody>();
+        rewardRb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
+        rewardRb.AddForce(Vector3.left * 2f, ForceMode.Impulse);
+     //   reward.transform.position = Vector3.Lerp(reward.transform.position, Vector3.up * 2f, 3f);
     }
-
-    //IEnumerator 
 }
