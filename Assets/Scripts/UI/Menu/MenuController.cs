@@ -4,20 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour
 {
-    [SerializeField] private Scene _raidScene;
+   // [SerializeField] private Scene _raidScene;
+    [SerializeField] private RaidLoadingTransition _raidLoadingTransition;
 
     private void Awake()
     {
-        _raidScene = SceneManager.GetSceneByName("RaidScene");
+        _raidLoadingTransition = new RaidLoadingTransition();
     }
 
     private void Update()
     {
-    }
 
-    public void OnStartRaidButtonClicked()
-    {
-        SceneManager.LoadScene("RaidScene", LoadSceneMode.Single);
-    //    SceneManager.UnloadSceneAsync("MenuScene");
     }
 }

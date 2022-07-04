@@ -8,6 +8,8 @@ public class PlayerBehaviour : UnitBehaviour
     [SerializeField] private Weapon _weapon;
     [SerializeField] private bool _isAttacking = false;
 
+    [SerializeField] private Animator _playerAnimator;
+
     public bool IsAttacking
     {
         get
@@ -17,6 +19,14 @@ public class PlayerBehaviour : UnitBehaviour
         set
         {
             _isAttacking = value;
+            if (_isAttacking)
+            {
+                _playerAnimator.SetBool("isShooting", true);
+            }
+            else
+            {
+                _playerAnimator.SetBool("isShooting", false);
+            }
         }
     }
 
