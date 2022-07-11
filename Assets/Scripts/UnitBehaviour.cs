@@ -15,7 +15,7 @@ public abstract class UnitBehaviour : MonoBehaviour
 
     protected void OnDamageReceived(float valueAsPercentage)
     {
-        Debug.Log($"Damage recevied, event invoked {valueAsPercentage} " + this.gameObject.name);
+   //     Debug.Log($"Damage recevied, event invoked {valueAsPercentage} " + this.gameObject.name);
         OnDamageReceivedEvent?.Invoke(valueAsPercentage);
     }
 }

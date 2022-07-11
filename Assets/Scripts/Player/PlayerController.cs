@@ -13,28 +13,30 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Animator _playerAnimator;
 
-    
 
-    public bool isMoving;
+
+    public bool isMoving = false;
 
     private CharacterController _playerController;
 
-    private void Start()
+    private void Awake()
     {
         _playerController = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
-        if (_playerController.velocity.magnitude == 0)
+        if (_playerController.velocity.magnitude < 1)
         {
-            _playerAnimator.SetBool("isMoving", false);
+            isMoving = false;
+            _playerAnimator.SetBool("isMoving", isMoving);
         }
     }
 
     public void MovePlayer(Vector3 moveDirection)
     {
-        _playerAnimator.SetBool("isMoving", true);
+        isMoving = true;
+        _playerAnimator.SetBool("isMoving", isMoving);
         moveDirection = moveDirection * _moveSpeed;
         moveDirection.y = GravityHandler.GravityHandling(_playerController);
         _playerController.Move(moveDirection * Time.deltaTime);

@@ -20,7 +20,7 @@ public class RaidLoadingTransition : MonoBehaviour
     public async void LoadRaid(int sceneIndex)
     {
         _loadingScreen.SetActive(true);
-          StartCoroutine(LoadRaidAsync(sceneIndex));
+        StartCoroutine(LoadRaidAsync(sceneIndex));
     }
 
     IEnumerator LoadRaidAsync(int sceneIndex)

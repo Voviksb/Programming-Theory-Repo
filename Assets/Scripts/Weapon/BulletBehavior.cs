@@ -21,7 +21,7 @@ public class BulletBehavior : MonoBehaviour
      //   Debug.Log("Collided with smth"+ collision.gameObject.name);
         if (collision.gameObject.TryGetComponent<EnemyBehavior>(out EnemyBehavior enemy))
         {
-            Debug.Log("Collided with enemy");
+         //   Debug.Log("Collided with enemy");
             enemy?.ReceiveShot(transform.position);    
             Destroy(gameObject);
         }

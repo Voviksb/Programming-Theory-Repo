@@ -14,6 +14,11 @@ public class FollowingCamera : MonoBehaviour
 
     private Vector3 _currentVector;
 
+    private void Awake()
+    {
+        _player = GameObject.FindWithTag("player");
+    }
+
 
     void Start()
     {

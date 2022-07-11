@@ -14,12 +14,16 @@ public class JoystickForMovement : JoystickHandler
             if(!Player.IsAttacking)
                 PlayerController.RotatePlayer(new Vector3(_inputVector.x, 0, _inputVector.y));
         }
-        else
+        else if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             PlayerController.MovePlayer(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")));
 
             if (!Player.IsAttacking)
                 PlayerController.RotatePlayer(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")));
+        }
+        else
+        {
+            PlayerController.isMoving = false;
         }
     }
 }

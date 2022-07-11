@@ -7,8 +7,9 @@ public class HealthBarBase : MonoBehaviour
 {
     [SerializeField] protected Image _healthBar;
     [SerializeField] protected UnitBehaviour healthBarOwner;
-    void Awake()
+    void OnEnable()
     {
+      //  Debug.Log(healthBarOwner.name + "Initialized hpbar in base class");
         healthBarOwner.OnDamageReceivedEvent += OnDamageReceived;
     }
     void OnDestroy()

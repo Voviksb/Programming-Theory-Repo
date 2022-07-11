@@ -22,6 +22,12 @@ public class JoystickHandler : MonoBehaviour, IDragHandler, IPointerDownHandler,
     [SerializeField] protected PlayerController PlayerController;
     [SerializeField] protected PlayerBehaviour Player;
 
+    private void Awake()
+    {
+        Player = GameObject.FindWithTag("player").GetComponent<PlayerBehaviour>();
+        PlayerController = Player.GetComponent<PlayerController>();
+    }
+
     void Start()
     {
         _joystick.color = _inactiveJoystickColor;

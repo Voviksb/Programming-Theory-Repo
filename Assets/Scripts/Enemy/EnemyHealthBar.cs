@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class EnemyHealthBar : HealthBarBase
 {
     [SerializeField] private GameObject _healthBarBackground;
+
     private void OnEnable()
     {
+        healthBarOwner.OnDamageReceivedEvent += OnDamageReceived;
         _healthBarBackground.SetActive(true);
     }
     private void LateUpdate()

@@ -9,6 +9,7 @@ public class PlayerBehaviour : UnitBehaviour
     [SerializeField] private bool _isAttacking = false;
 
     [SerializeField] private Animator _playerAnimator;
+    
 
     public bool IsAttacking
     {
@@ -28,6 +29,11 @@ public class PlayerBehaviour : UnitBehaviour
                 _playerAnimator.SetBool("isShooting", false);
             }
         }
+    }
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
     }
 
     private void Start()
@@ -90,12 +96,4 @@ public class PlayerBehaviour : UnitBehaviour
             base.OnDamageReceived(_currentHpAsPercentage);
         }
     }
-
-/*    public void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.TryGetComponent<EnemyDetectCollision>(out EnemyDetectCollision enemy) && enemy._enemy.IsAttacking)
-        {
-            ReceiveDamage();
-        }
-    }*/
 }

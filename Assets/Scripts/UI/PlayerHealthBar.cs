@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PlayerHealthBar : HealthBarBase
 {
-/*    [SerializeField] PlayerBehaviour player;
+    [SerializeField] PlayerBehaviour _player;
 
     void Awake()
     {
-        player.OnDamageReceivedEvent += base.OnDamageReceived;
+        _player = GameObject.FindWithTag("player").GetComponent<PlayerBehaviour>();
+        healthBarOwner = _player;
+       // Debug.Log(healthBarOwner.name + "Initialized hpbar in child class");
     }
 
     void OnDestroy()
     {
-        player.OnDamageReceivedEvent -= base.OnDamageReceived;
-    }*/
+    }
 }
