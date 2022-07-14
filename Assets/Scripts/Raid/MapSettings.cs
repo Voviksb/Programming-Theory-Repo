@@ -15,25 +15,28 @@ public class MapSettings : MonoBehaviour
     };
 
     [SerializeField]
-    private EscapePoint[] escapePoints = new EscapePoint[4];
+    private EscapePoint[] _escapePoints = new EscapePoint[4];
 
-    private void Awake()
+    public void InitializeEscapePositions()
     {
-        /*escapePoints[0] = new EscapePointPreset("ac", true);
-        escapePoints[1] = new EscapePointPreset("ac", true);
-        escapePoints[2] = new EscapePointPreset("ac", true);
-        escapePoints[3] = new EscapePointPreset("ac", true);*/
-    }
+        int activeEscapePointsCount = Random.Range(1, _escapePoints.Length + 1);
+        Debug.Log("Active escape points count will be: " + activeEscapePointsCount);
 
-    public void InitializeEscapePositions(int[] activePos)
-    {
-        for(int i = 0; i < escapePoints.Length; i++)
+        int[] EscapePointsToActivate = new int[activeEscapePointsCount];
+        for (int i = 0; i < activeEscapePointsCount; i++)
         {
-            for (int j = 0; j < activePos.Length; j ++)
+            EscapePointsToActivate[i] = Random.Range(0, activeEscapePointsCount);
+            Debug.Log(EscapePointsToActivate[i]);
+        }
+
+        for (int i = 0; i < _escapePoints.Length; i++)
+        {
+            for (int j = 0; j < EscapePointsToActivate.Length; j++)
             {
-                if (i == j)
+                if (i == EscapePointsToActivate[j])
                 {
-                    escapePoints[i].isActive = true;
+                    _escapePoints[j].gameObject.SetActive(true);
+                    Debug.Log(_escapePoints[j].gameObject.name + " is Activated"); 
                 }
             }
         }

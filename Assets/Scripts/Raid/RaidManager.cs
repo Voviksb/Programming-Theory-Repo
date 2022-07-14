@@ -22,7 +22,7 @@ public class RaidManager : MonoBehaviour
 
     public void InitializeMap()
     {
-        _map.InitializeEscapePositions(new int[2]{1,2});
+        _map.InitializeEscapePositions();
     }
 
     private void SpawnPlayer()

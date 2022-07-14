@@ -14,7 +14,7 @@ public class EscapePoint : MonoBehaviour
     }*/
     void Start()
     {
-        this.gameObject.SetActive(isActive);
+        isActive = true;
     }
 
     // Update is called once per frame

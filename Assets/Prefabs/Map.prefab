@@ -1796,6 +1796,11 @@ MonoBehaviour:
   - {x: 15, y: 10, z: 105}
   - {x: -32, y: 10, z: -23}
   - {x: 20, y: 10, z: 30}
+  _escapePoints:
+  - {fileID: 8472628077315650534, guid: cfbaa86cb88299e49acb8abeedb33250, type: 3}
+  - {fileID: 2095700987718771103, guid: efb74daaaa921684fb25ebeaa11d9f05, type: 3}
+  - {fileID: 8441968054886079346, guid: 57d1a64fc978afb4b8faa057e023860f, type: 3}
+  - {fileID: 3879605111958189226, guid: d1ebee062a27c6f4abbc4095011ef03c, type: 3}
 --- !u!1 &5770158186214261823
 GameObject:
   m_ObjectHideFlags: 0
