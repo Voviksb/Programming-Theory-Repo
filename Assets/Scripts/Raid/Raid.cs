@@ -12,14 +12,10 @@ public class Raid : MonoBehaviour
     public event Action<string> OnTimerCountChangedEvent;
     // [SerializeField] private RaidRewards _raidRewards;
 
-
-
     private void Start()
     {
-
         StartCoroutine(RaidDurationTimer());
     }
-
 
     IEnumerator RaidDurationTimer()
     {

@@ -11,7 +11,6 @@ public class EscapePointBehaviour : MonoBehaviour
     [SerializeField] private Image _escapeBar;
     [SerializeField] private Canvas _escapeCanvas;
     [SerializeField] private TextMeshProUGUI _escapeText;
-
     private void Start()
     {
         _escapeCanvas.gameObject.SetActive(false);

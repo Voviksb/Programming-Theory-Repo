@@ -76,7 +76,7 @@ RectTransform:
   m_Children:
   - {fileID: 7636973982525929178}
   m_Father: {fileID: 444223747565031703}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -425,7 +425,6 @@ GameObject:
   m_Component:
   - component: {fileID: 444223747565032981}
   - component: {fileID: 444223747570730547}
-  - component: {fileID: 444223747565519476}
   m_Layer: 0
   m_Name: Body_01_tanktop
   m_TagString: Untagged
@@ -514,20 +513,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.07043728, y: 0.021879755, z: 0.000000029802322}
     m_Extent: {x: 0.52468824, y: 0.24432853, z: 0.75921905}
   m_DirtyAABB: 0
---- !u!64 &444223747565519476
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444223747565519477}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300362, guid: f88c8301226fd194cbbc64e25b20d567, type: 3}
 --- !u!1 &444223747565519479
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,7 +1260,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 444223747565031699}
-  - component: {fileID: 6767397873166236778}
   m_Layer: 0
   m_Name: HEAD_CONTAINER
   m_TagString: Untagged
@@ -1298,20 +1282,6 @@ Transform:
   m_Father: {fileID: 444223747565031605}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &6767397873166236778
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444223747565522291}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300360, guid: f88c8301226fd194cbbc64e25b20d567, type: 3}
 --- !u!1 &444223747565522295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,6 +1297,7 @@ GameObject:
   - component: {fileID: 8788288486236306896}
   - component: {fileID: 444223747565522294}
   - component: {fileID: -5916785774322082686}
+  - component: {fileID: 1617441960108020820}
   m_Layer: 0
   m_Name: ZombiePrefab
   m_TagString: enemy
@@ -1347,8 +1318,8 @@ Transform:
   m_Children:
   - {fileID: 444223747565031603}
   - {fileID: 444223747565032981}
-  - {fileID: 133888274306584971}
   - {fileID: 7322249885868775483}
+  - {fileID: 133888274306584971}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1406,8 +1377,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7520291, y: 1.6666666, z: 1.6775229}
-  m_Center: {x: -0.015578429, y: 0.7777778, z: 0.273951}
+  m_Size: {x: 1.2851728, y: 1.6666666, z: 1.2750865}
+  m_Center: {x: -0.020958053, y: 0.77777654, z: 0.072732605}
 --- !u!195 &8788288486236306896
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1542,6 +1513,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &1617441960108020820
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444223747565522295}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.37365997
+  m_Height: 1.6133162
+  m_Direction: 1
+  m_Center: {x: -0.006258329, y: 0.80106556, z: 0.0028425853}
 --- !u!1 &444223747565522297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,7 +1622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4068857106830684139, guid: 5189cc100c29ebb459f4ca70e9ff2d4c, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4068857106830684139, guid: 5189cc100c29ebb459f4ca70e9ff2d4c, type: 3}
       propertyPath: m_LocalScale.x

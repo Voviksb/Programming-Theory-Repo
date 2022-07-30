@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapSettings : MonoBehaviour
 {
     [SerializeField]
-    private Vector3[] _spawnPositions = new Vector3[5]
+    static private Vector3[] _spawnPositions = new Vector3[5]
     {
         new Vector3(125, 10, 40),
         new Vector3(70, 10, 140),
@@ -14,18 +14,28 @@ public class MapSettings : MonoBehaviour
         new Vector3(20, 10, 30),
     };
 
-    [SerializeField]
-    private EscapePoint[] _escapePoints = new EscapePoint[4];
+    [SerializeField] private EscapePoint[] _escapePoints;
+    public int ActivePointsCount { get; set; }
+
+    private void Awake()
+    {
+        InitializeEscapePositions();
+    }
+
+    public EscapePoint[] GetActiveEscapePoints()
+    {
+        return _escapePoints;
+    }
 
     public void InitializeEscapePositions()
     {
-        int activeEscapePointsCount = Random.Range(1, _escapePoints.Length + 1);
-        Debug.Log("Active escape points count will be: " + activeEscapePointsCount);
+        ActivePointsCount = Random.Range(1, _escapePoints.Length + 1);
+        Debug.Log("Active escape points count will be: " + ActivePointsCount);
 
-        int[] EscapePointsToActivate = new int[activeEscapePointsCount];
-        for (int i = 0; i < activeEscapePointsCount; i++)
+        int[] EscapePointsToActivate = new int[ActivePointsCount];
+        for (int i = 0; i < ActivePointsCount; i++)
         {
-            EscapePointsToActivate[i] = Random.Range(0, activeEscapePointsCount);
+            EscapePointsToActivate[i] = Random.Range(0, ActivePointsCount);
             Debug.Log(EscapePointsToActivate[i]);
         }
 
@@ -35,31 +45,18 @@ public class MapSettings : MonoBehaviour
             {
                 if (i == EscapePointsToActivate[j])
                 {
-                    _escapePoints[j].gameObject.SetActive(true);
-                    Debug.Log(_escapePoints[j].gameObject.name + " is Activated"); 
+                    _escapePoints[EscapePointsToActivate[j]].gameObject.SetActive(true);
+                    Debug.Log(_escapePoints[j].gameObject.name + j + " is Activated"); 
                 }
             }
         }
     }
 
-    public Vector3 SelectSpawnPosition()
+    static public Vector3 SelectSpawnPosition()
     {
         Debug.Log("Selecting spawn pos");
         Vector3 spawnPosition;
         spawnPosition = _spawnPositions[Random.Range(0, 5)];
         return spawnPosition;
-    }
-}
-
-public struct EscapePointPreset
-{
-    public string escapePointName;
-    public bool isActive;
-    //  public EscapePoint escapePointPrefab;
-
-    public EscapePointPreset(string name, bool active)
-    {
-        escapePointName = name;
-        isActive = active;
     }
 }

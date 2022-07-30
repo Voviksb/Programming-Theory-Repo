@@ -12,11 +12,6 @@ public class RaidLoadingTransition : MonoBehaviour
     [SerializeField] private Slider _slider;
     [SerializeField] private TextMeshProUGUI _loadingText;
 
-    private void Awake()
-    {
-
-    }
-
     public async void LoadRaid(int sceneIndex)
     {
         _loadingScreen.SetActive(true);

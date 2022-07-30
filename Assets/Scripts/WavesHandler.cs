@@ -49,13 +49,10 @@ public class WavesHandler : MonoBehaviour
 
     private IEnumerator WaitNextWave(int secs)
     {
-        _userInterface.SwitchTimer();
         for (int i = 0; i < secs; i++)
         {
-            _userInterface.TimeTillNextWave(secs - i);
             yield return new WaitForSeconds(1);
         }
-        _userInterface.SwitchTimer();
         StartNextWave();
         yield break;
     }

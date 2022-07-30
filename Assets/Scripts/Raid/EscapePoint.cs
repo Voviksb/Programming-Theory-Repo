@@ -6,20 +6,8 @@ public class EscapePoint : MonoBehaviour
 {
     [SerializeField] private string _escapePointName;
     [SerializeField] private Vector3 _escapePosition;
-    public bool isActive = false;
 
-/*    private void Awake()
-    {
-        
-    }*/
-    void Start()
-    {
-        isActive = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public string EscapePointName { 
+        get { return _escapePointName;} 
     }
 }

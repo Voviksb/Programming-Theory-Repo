@@ -8,10 +8,20 @@ public class PlayerAccount : MonoBehaviour, IDataPersistence
     [SerializeField] private string _playerID;
     [SerializeField] private string _playerName;
     [SerializeField] private bool _isVIP;
-    
+
+    public static PlayerAccount Instance { get; private set; }
     private void Awake()
     {
-      //  Debug.Log(_playerID);
+        if (Instance != null)
+        {
+            Debug.LogError("Found more than one Player in the scene");
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     private void Start()
