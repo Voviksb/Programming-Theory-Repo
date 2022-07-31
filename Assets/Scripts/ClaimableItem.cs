@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClaimableItem : MonoBehaviour
 {
-  //  [SerializeField] private Rigidbody _rigidBody;
-
-
+    [SerializeField] private Image _itemBar;
+    [SerializeField] private Canvas _itemCanvas;
     private void Start()
     {
-     //   StartCoroutine(DropAnimation());
+        _itemCanvas.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        this.transform.RotateAround(Vector3.up, 0.004f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -17,6 +22,7 @@ public class ClaimableItem : MonoBehaviour
         if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
         {
             StartCoroutine(ClaimItem());
+            _itemCanvas.gameObject.SetActive(true);
         }
     }
 
@@ -25,30 +31,23 @@ public class ClaimableItem : MonoBehaviour
         if (other.gameObject.TryGetComponent<PlayerBehaviour>(out PlayerBehaviour player))
         {
             StopAllCoroutines();
+            _itemBar.fillAmount = 0;
+            _itemCanvas.gameObject.SetActive(false);
         }
     }
 
-/*    IEnumerator DropAnimation()
-    {
-        float animTime = 2f;
-        Vector3 targetUp = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
-        while (animTime > 0)
-        {
-            animTime -= Time.deltaTime;
-            transform.Translate(Vector3.Lerp(transform.position, targetUp, 1f));
-            yield return null;
-        }
-    }*/
-
     IEnumerator ClaimItem()
     {
-        float time = 2f;
-        while (time > 0)
+        float claimTime = 2f;
+        float currentClaimTime = 0f;
+        while (currentClaimTime < claimTime)
         {
-            time -= Time.deltaTime;
+            currentClaimTime += Time.deltaTime;
+            _itemBar.fillAmount = currentClaimTime / claimTime;
             yield return null;
         }
         Debug.Log("Item claimed");
         this.gameObject.SetActive(false);
+        _itemCanvas.gameObject.SetActive(false);
     }
 }

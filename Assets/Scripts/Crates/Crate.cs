@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class Crate : MonoBehaviour
 {
-    [SerializeField] private GameObject _crateModel;
-    [SerializeField] private CrateConfig _crateConfig;
     [SerializeField] private string _crateType;
-    [SerializeField] private string _rarity;
+    [SerializeField] private int _rarity;
     [SerializeField] private float _unlockTime;
     [SerializeField] private GameObject _reward;
     [SerializeField] private Image _crateBar;
@@ -19,11 +17,6 @@ public class Crate : MonoBehaviour
 
     void Start()
     {
-        _crateModel = _crateConfig.crateModel;
-        _crateInstance = Instantiate(_crateModel, this.transform.position, _crateModel.transform.rotation);
-        _crateInstance.transform.parent = this.transform;
-        _crateType = _crateConfig.crateType;
-        _rarity = _crateConfig.rarity;
         _crateCanvas.gameObject.SetActive(false);
     }
 
@@ -51,7 +44,7 @@ public class Crate : MonoBehaviour
 
     IEnumerator UnlockCrate()
     {
-        float unlockTime = 2f;
+        float unlockTime = _unlockTime;
         float currentUnlockTime = 0f;
         while (currentUnlockTime < unlockTime)
         {

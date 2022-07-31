@@ -7,6 +7,5 @@ public class CrateConfig : ScriptableObject
 {
     public string crateName;
     public string crateType;
-    public string rarity;
-    public GameObject crateModel;
+    public int rarity;
 }

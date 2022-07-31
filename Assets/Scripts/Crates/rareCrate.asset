@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 529502f800808bc43a2a62885f59246a, type: 3}
   m_Name: rareCrate
   m_EditorClassIdentifier: 
-  crateName: rare crate
+  crateName: weapon crate
   crateType: weapon
   rarity: rare
   crateModel: {fileID: 7309700608015444466, guid: 1653fe2f361001249b937de32c9a8fd8, type: 3}

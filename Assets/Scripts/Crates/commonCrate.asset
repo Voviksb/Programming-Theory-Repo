@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 529502f800808bc43a2a62885f59246a, type: 3}
   m_Name: commonCrate
   m_EditorClassIdentifier: 
-  crateName: common crate
+  crateName: weapon crate
   crateType: weapon
-  rarity: common
-  crateModel: {fileID: 5919947523036295857, guid: 79343fa17bf1789428d80df23a3b0c26, type: 3}
+  rarity: 0

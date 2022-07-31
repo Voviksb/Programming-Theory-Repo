@@ -50,7 +50,7 @@ public class PlayerAccount : MonoBehaviour, IDataPersistence
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _playerID = System.Guid.NewGuid().ToString();
-            DataPersistenceManager.Instance.SaveGame();
+            DataPersistenceManager.Instance.SaveGame();  
         }
     }
 }

@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
             isMoving = false;
             _playerAnimator.SetBool("isMoving", isMoving);
         }
+
+        _playerController.Move(new Vector3(0f, GravityHandler.GravityHandling(_playerController), 0f));
     }
 
     public void MovePlayer(Vector3 moveDirection)
@@ -38,7 +40,7 @@ public class PlayerController : MonoBehaviour
         isMoving = true;
         _playerAnimator.SetBool("isMoving", isMoving);
         moveDirection = moveDirection * _moveSpeed;
-        moveDirection.y = GravityHandler.GravityHandling(_playerController);
+        //moveDirection.y = GravityHandler.GravityHandling(_playerController);
         _playerController.Move(moveDirection * Time.deltaTime);
     }
 

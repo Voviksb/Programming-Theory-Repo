@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 8154788806258071576}
   - component: {fileID: 3850284573920469014}
   - component: {fileID: 3763883557890246240}
+  - component: {fileID: 138697574}
   m_Layer: 0
   m_Name: MedCrateModel
   m_TagString: Untagged
@@ -276,3 +277,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5000257, y: 0.29130766, z: 1.0131369}
   m_Center: {x: 0.0014876605, y: 0.14228152, z: 0.0009383202}
+--- !u!65 &138697574
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919947523036295857}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7267379, y: 0.37305468, z: 1.3667417}
+  m_Center: {x: -0.00000015894571, y: 0.16589555, z: 0.008840799}
